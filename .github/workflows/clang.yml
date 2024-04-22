@@ -23,6 +23,16 @@ jobs:
                 chmod +x ./llvm.sh
                 sudo ./llvm.sh 17 all
 
-            - name: Test
-              run: clang-scan-deps-17 -format=p1689 -- clang-17 -std=c++20 -MD -MF demo.cc.d demo.cc -o demo.o
- 
+            - name: Test Scan Dependency
+              run: |
+                clang-scan-deps-17 -format=p1689 -- clang++-17 -c -std=c++20 -MD -MF demo.cc.d demo.cc -o demo.o
+                clang-scan-deps-17 -format=p1689 -- clang++-17 -c -std=c++20 -MD -MF foo.cppm.d foo.cppm -o foo.o
+
+            - name: Build C++20 Modules
+              run: |
+                clang++-17 -c -std=c++20 foo.cppm -fmodule-output=foo.pcm -o foo.o
+                clang++-17 -c -std=c++20 demo.cc -fmodule-file=foo=foo.pcm -o demo.o
+                clang++-17 demo.o foo.o -o demo
+
+            - name: Run demo
+              run: ./demo
