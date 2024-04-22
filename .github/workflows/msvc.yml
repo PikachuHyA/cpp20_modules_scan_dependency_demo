@@ -1,0 +1,23 @@
+name: Windows MSVC
+
+on:
+    workflow_call:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_dispatch:
+
+jobs:
+    windows_msvc:
+        runs-on: windows-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Enable Developer Command Prompt
+              uses: ilammy/msvc-dev-cmd@v1.12.0
+            - name: Test Scan Dependency
+              run: |
+                cl /std:c++latest /scanDependencies output.json demo.cc
+                type output.json

@@ -1,0 +1,26 @@
+name: Ubuntu (gcc)
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_call:
+    workflow_dispatch:
+
+jobs:
+    ubuntu_gcc:
+        runs-on: ubuntu-24.04
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Install
+              run: |
+                apt install software-properties-common
+                add-apt-repository ppa:ubuntu-toolchain-r/ppa
+                apt update
+                apt install gcc-14 g++-14
+            - name: Test Scan Dependency
+              working-directory:
+              run: g++ -E -fmodules-ts -MD -MF demo.cc.d -fdeps-file=/dev/stdout -fdeps-format=p1689r5 -fdeps-target=demo.o demo.cc -o demo.cc.pp

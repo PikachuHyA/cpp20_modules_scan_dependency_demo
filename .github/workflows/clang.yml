@@ -1,0 +1,28 @@
+name: Ubuntu (clang)
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_call:
+    workflow_dispatch:
+
+jobs:
+    ubuntu_clang:
+
+        runs-on: ubuntu-22.04
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Install newer Clang
+              run: |
+                wget https://apt.llvm.org/llvm.sh
+                chmod +x ./llvm.sh
+                sudo ./llvm.sh 17 all
+
+            - name: Test
+              run: clang-scan-deps-17 -format=p1689 -- clang-17 -std=c++20 -MD -MF demo.cc.d demo.cc -o demo.o
+ 
