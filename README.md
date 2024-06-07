@@ -137,10 +137,59 @@ the result of scanning `foo.cppm`
 see also `.github/workflows/msvc.yml`
 
 ## GCC
-TODO
 
-(I failed to install GCC 14.)
+only test with GCC 14
 
+use `gcc-14 -E -MD -MF <path/to/dotd_file> -fdeps-file=<path/to/ddi_file> -fdeps-format=p1689r5 xxx`
+
+note `-MD -MF <path/to/dotd_file>` is required.
+
+the result of scanning `demo.cc`
+```
+gcc-14 -E -x c++ -fmodules-ts -MD -MF demo.d -fdeps-file=/dev/stdout -fdeps-format=p1689r5 demo.cc -o demo.cc.i
+```
+the output
+```
+{
+"rules": [
+{
+"primary-output": "demo.cc.o",
+"requires": [
+{
+"logical-name": "foo"
+}
+]
+}
+],
+"version": 0,
+"revision": 0
+}
+```
+
+the result of scanning `foo.cppm`
+```
+gcc-14 -E -x c++ -fmodules-ts -MD -MF foo.d -fdeps-file=/dev/stdout -fdeps-format=p1689r5 foo.cppm -o foo.cppm.i
+```
+the output
+```
+{
+"rules": [
+{
+"primary-output": "foo.cppm.o",
+"provides": [
+{
+"logical-name": "foo",
+"is-interface": true
+}
+],
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}
+```
 ## References
 
 - Clang [Standard C++ Modules](https://clang.llvm.org/docs/StandardCPlusPlusModules.html)
