@@ -28,10 +28,24 @@ jobs:
                 g++-14 -std=c++20 -E -fmodules-ts -MD -MF demo.cc.d -fdeps-file=/dev/stdout -fdeps-format=p1689r5 -fdeps-target=demo.o demo.cc -o demo.cc.pp
                 g++-14 -std=c++20 -E -fmodules-ts -MD -MF foo.cppm.d -fdeps-file=/dev/stdout -fdeps-format=p1689r5 -fdeps-target=foo.o foo.cppm -o foo.cppm.pp
 
-            - name: Build C++20 Modules
+            - name: Build C++20 Modules foo
               run: |
                 g++-14 -std=c++20 -c -fmodules-ts -MD -MF foo.cppm.d foo.cppm -fmodule-mapper=gcc.modmap -o foo.o
+
+            - name: Check
+              run: |
+                ls
+
+            - name: use C++20 Modules foo
+              run: |
                 g++-14 -std=c++20 -c -fmodules-ts -MD -MF demo.cc.d demo.cc -fmodule-mapper=gcc.modmap -o demo.o
+
+            - name: Check
+              run: |
+                ls
+                
+            - name: Link
+              run: |
                 g++-14 foo.o demo.o -o demo
 
             - name: Run demo
