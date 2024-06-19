@@ -75,7 +75,7 @@ the result of scanning `foo.cppm`
 }
 ```
 
-see also `.github/workflows/clang.yml`
+see also [.github/workflows/clang.yml](.github/workflows/clang.yml)
 
 
 ## MSVC
@@ -134,7 +134,7 @@ the result of scanning `foo.cppm`
 ```
 
 
-see also `.github/workflows/msvc.yml`
+see also [.github/workflows/msvc.yml](.github/workflows/msvc.yml)
 
 ## GCC
 
@@ -190,8 +190,11 @@ the output
 "revision": 0
 }
 ```
+
+see also [.github/workflows/gcc.yml](.github/workflows/gcc.yml)
 ## References
 
 - Clang [Standard C++ Modules](https://clang.llvm.org/docs/StandardCPlusPlusModules.html)
 - MSVC [Using C++ Modules in MSVC from the Command Line Part 1: Primary Module Interfaces](https://devblogs.microsoft.com/cppblog/using-cpp-modules-in-msvc-from-the-command-line-part-1/)
+- GCC [C++ Modules](https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Modules.html)
 - [import CMake; C++20 Modules](https://www.kitware.com/import-cmake-c20-modules/)
